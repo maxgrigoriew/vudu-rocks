@@ -1,0 +1,28 @@
+.post {
+  border-radius: var(--large-radius);
+  cursor: pointer;
+  background-color: var(--light);
+  border-bottom-left-radius: var(--large-radius);
+  border-bottom-right-radius: var(--large-radius);
+  background-color: var(--light-gray);
+  transition: all var(--transition);
+  padding: 15px;
+
+  &__title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    text-transform: capitalize;
+    color: blue;
+  }
+
+  &__body {
+    font-size: 20px;
+  }
+
+  &__author {
+    padding-top: 10px;
+    color: blue;
+  }
+
+}
