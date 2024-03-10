@@ -1,12 +1,18 @@
 .header {
   &__inner {
     display: flex;
+    position: relative;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 20px 0;
+
   }
 
   &__icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     display: inline-flex;
     padding: 0;
     border: none;

@@ -13,6 +13,7 @@ const store = useStore();
             <use xlink:href="@/assets/images/sprite.svg#theme" />
           </svg>
         </button>
+        <slot />
       </div>
     </div>
   </header>
