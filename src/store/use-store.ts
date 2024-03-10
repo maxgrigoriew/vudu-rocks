@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import PostServices from '../servises/PostServices';
-import { type Post, Author } from '../types/index';
+import { type Post, type Author } from '../types/index';
 
 interface State {
   pages: number;
@@ -16,7 +16,7 @@ interface State {
 
 export default defineStore('store', {
   state: (): State => ({
-    limitPages: 10,
+    limitPages: 9,
     pages: 1,
     currentPage: 1,
     posts: [],
@@ -27,21 +27,27 @@ export default defineStore('store', {
     onePost: null,
   }),
   getters: {
-    concatArray: (state) => {
-      const arrayWidthName = state.posts.map((post) => {
-        const author = state.authors.find(
+    postsAndAuthors(state) {
+      return state.posts.map((post) => {
+        const findAuthor = state.authors.find(
           (authorArg) => post.userId === authorArg.id,
         );
 
-        if (author) {
-          return {
-            ...post,
-            authorName: author.name,
-          };
-        }
-      });
+        if (!findAuthor) return;
 
-      return arrayWidthName;
+        return {
+          ...post,
+          authorName: findAuthor.name,
+        };
+      });
+    },
+    filtredPosts(state): Post[] {
+      return this.postsAndAuthors.filter(
+        (item) =>
+          item?.authorName
+            .toLowerCase()
+            .includes(state.searchQuery.toLowerCase()),
+      );
     },
   },
   actions: {
@@ -50,6 +56,8 @@ export default defineStore('store', {
     },
     async fetchPosts() {
       try {
+        this.isLoading = true;
+
         const response = await PostServices.getPosts(
           this.currentPage,
           this.limitPages,
@@ -59,6 +67,8 @@ export default defineStore('store', {
         this.pages = Math.ceil(
           +response.headers['x-total-count'] / this.limitPages,
         );
+
+        this.isLoading = false;
       } catch (error) {
         console.error(error);
       }
@@ -113,13 +123,6 @@ export default defineStore('store', {
         return;
       }
       this.currentPage -= 1;
-    },
-    changeTheme() {
-      this.isLightTheme = !this.isLightTheme;
-      document.querySelector('body')?.classList.toggle('light-theme');
-    },
-    setTheme() {
-      document.querySelector('body')?.classList.toggle('light-theme');
     },
   },
 });

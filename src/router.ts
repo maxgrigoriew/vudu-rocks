@@ -17,6 +17,11 @@ const routes = [
       layout: 'MainLayout',
     },
   },
+  {
+    path: '/:catchAll(.*)',
+    component: () => import('./pages/NotFound.vue'),
+    redirect: '/',
+  },
 ];
 
 const router = createRouter({

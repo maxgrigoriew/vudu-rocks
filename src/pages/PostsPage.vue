@@ -2,24 +2,19 @@
 import { onMounted, watch } from 'vue';
 import PostList from '@/components/PostList/PostList.vue';
 import useStore from '@/store/use-store';
-import { debounce } from '@/utils/debounce';
 
 const store = useStore();
-watch(
-  () => store.searchQuery,
-  debounce((newVal: string) => {
-    store.setSearchQuery(newVal);
-    store.getAuthorsAndPosts();
-  }, 500),
-);
-
+watch(() => store.searchQuery, store.filtredPosts);
 onMounted(() => {
   store.getAuthorsAndPosts();
 });
 </script>
 
 <template>
-  <post-list :posts="store.concatArray" />
+  <div class="input-wrapper">
+    <is-input v-model="store.searchQuery" placeholder="Поиск..." />
+  </div>
+  <post-list :posts="store.filtredPosts" />
   <pagination-list
     style="margin-top: 40px"
     :pages="store.pages"
@@ -28,3 +23,9 @@ onMounted(() => {
   />
   <is-loader v-if="store.isLoading" />
 </template>
+<style>
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+}
+</style>

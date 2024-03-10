@@ -11,6 +11,7 @@ const props = defineProps<Props>();
 const emits = defineEmits<{
   fetchData: [value: void];
 }>();
+
 watch(
   () => props.currentPage,
   () => {

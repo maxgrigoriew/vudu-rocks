@@ -1,15 +1,12 @@
 <template>
-  <div id="app">
-    <component :is="layout">
+  <div class="wrapper">
+    <div class="container">
       <router-view />
-    </component>
+    </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-
-const route = useRoute();
-const layout = computed(() => route.meta.layout);
-</script>
+<style>
+.wrapper {
+  padding-top: 20px;
+}
+</style>
