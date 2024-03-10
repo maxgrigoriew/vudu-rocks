@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import PostServices from '../servises/PostServices';
-import { type Post } from '../types/index';
+import { type Post, Author } from '../types/index';
 
 interface State {
   pages: number;
@@ -9,8 +9,9 @@ interface State {
   searchQuery: string;
   limitPages: number;
   posts: Post[];
-  authors: Post[];
+  authors: Author[];
   isLightTheme: boolean;
+  onePost: Post | null;
 }
 
 export default defineStore('store', {
@@ -23,6 +24,7 @@ export default defineStore('store', {
     isLightTheme: false,
     isLoading: false,
     searchQuery: '',
+    onePost: null,
   }),
   getters: {
     concatArray: (state) => {
@@ -57,7 +59,6 @@ export default defineStore('store', {
         this.pages = Math.ceil(
           +response.headers['x-total-count'] / this.limitPages,
         );
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
@@ -80,6 +81,17 @@ export default defineStore('store', {
         this.isLoading = false;
       } catch (e) {
         console.error(e);
+      }
+    },
+
+    async getOnePost(id: string) {
+      try {
+        this.isLoading = true;
+        const response = await PostServices.getOnePost(id);
+        this.onePost = { ...response.data };
+        this.isLoading = false;
+      } catch (e) {
+        console.log(e);
       }
     },
 

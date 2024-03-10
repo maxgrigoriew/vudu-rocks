@@ -4,3 +4,8 @@ export interface Post {
   title: string;
   body: string;
 }
+export interface Author {
+  id: number;
+  name: string;
+  surname: string;
+}

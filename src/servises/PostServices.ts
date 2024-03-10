@@ -15,4 +15,8 @@ export default class PostServices {
   static async getAuthors() {
     return http.get('/users');
   }
+
+  static async getOnePost(id: string) {
+    return http.get('/posts/' + id);
+  }
 }

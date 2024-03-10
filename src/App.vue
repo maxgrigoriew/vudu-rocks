@@ -1,21 +1,15 @@
 <template>
-  <div>123</div>
-  <component :is="layout" />
+  <div id="app">
+    <component :is="layout">
+      <router-view />
+    </component>
+  </div>
 </template>
-<script>
-import MainLayout from './layouts/MainLayout.vue';
 
-export default {
-  components: {
-    MainLayout,
-  },
-  mounted() {
-    console.log(this.$route);
-  },
-  computed: {
-    layout() {
-      return () => import(`@/layouts/${this.$route.meta.layout}.vue`);
-    },
-  },
-};
+<script setup lang="ts">
+import { computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const layout = computed(() => route.meta.layout);
 </script>

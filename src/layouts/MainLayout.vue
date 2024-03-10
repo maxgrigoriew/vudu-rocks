@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import AppHeader from '../components/AppHeader/AppHeader.vue';
+import AppHeader from '@/components/AppHeader/AppHeader.vue';
 </script>
 <template>
-  <div>
-    <div class="wrapper-header">
-      <div class="container">
-        <AppHeader />
-      </div>
-    </div>
-    <div class="container">
-      <main class="main">
-        <slot />
-      </main>
-    </div>
+  <div class="wrapper-header">
+    <app-header>
+      <is-input v-model="store.searchQuery" placeholder="Name" />
+    </app-header>
+  </div>
+  <div class="container">
+    <main class="main">
+      <slot />
+    </main>
   </div>
 </template>
 

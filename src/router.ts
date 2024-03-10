@@ -10,7 +10,7 @@ const routes = [
     },
   },
   {
-    path: '/:/id',
+    path: '/:id',
     name: 'post',
     component: () => import('./pages/PostPage.vue'),
     meta: {

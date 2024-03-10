@@ -8,6 +8,7 @@ const store = useStore();
   <header>
     <div class="container">
       <div :class="$style.header__inner">
+        12222
         <button :class="$style.header__icon" @click="store.changeTheme">
           <svg :class="$style.pagination__arrow1" width="22" height="22">
             <use xlink:href="@/assets/images/sprite.svg#theme" />
